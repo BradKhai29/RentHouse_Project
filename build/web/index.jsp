@@ -14,10 +14,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
     </head>
     <body>
-    <a href="user?command=register">Get to register page</a>
+    <a href="user?action=register">Get to register page</a>
     ${USER == null ? '' : USER.username}
     <c:if test="${USER != null}">
-     	<br><a href="user?command=logout">log out</a>
+     	<br><a href="user?action=logout">log out</a>
     </c:if>
     <br>
     <a href="user">Login page</a>

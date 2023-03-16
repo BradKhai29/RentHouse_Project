@@ -15,6 +15,7 @@ import controller.cookie.CookieSupportServlet;
 import support_enum.ActionEnum;
 import entity.user.User;
 import entity.user.UserDAO;
+import java.util.Objects;
 import webpage_tools.URLBuilder;
 import webpage_tools.URLBuilderFactory;
 import support_enum.*;
@@ -22,74 +23,78 @@ import support_enum.*;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet({ "/UserServlet", "/user" })
+@WebServlet({"/UserServlet", "/user"})
 public final class UserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final URLBuilder URL_BUILDER = URLBuilderFactory.get();
-	
-	private static String HOMEPAGE = URL_BUILDER.addPage(WebPageEnum.HOME).getURL();
-	private static String LOGIN_PAGE = URL_BUILDER
-										.addFolder(FolderEnum.USER)
-										.addPage(WebPageEnum.USER_LOGIN)
-										.getURL();
-	private static String REGISTER_PAGE = URL_BUILDER
-										.addFolder(FolderEnum.USER)
-										.addPage(WebPageEnum.USER_REGISTER)
-										.getURL();
-	
-	private static final UserDAO userDAO;
+
+    private static final long serialVersionUID = 1L;
+    private static final URLBuilder URL_BUILDER = URLBuilderFactory.get();
+
+    private static String HOMEPAGE = URL_BUILDER.addPage(WebPageEnum.HOME).getURL();
+    private static String LOGIN_PAGE = URL_BUILDER
+            .addFolder(FolderEnum.USER)
+            .addPage(WebPageEnum.USER_LOGIN)
+            .getURL();
+    private static String REGISTER_PAGE = URL_BUILDER
+            .addFolder(FolderEnum.USER)
+            .addPage(WebPageEnum.USER_REGISTER)
+            .getURL();
+
+    private static final UserDAO userDAO;
 
     static {
         userDAO = new UserDAO();
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String receiveAction = request.getParameter("action");
+        ActionEnum command = ActionEnum.get(receiveAction);
+        System.out.println(command);
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
-	}
-	
-	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String receiveCommand = request.getParameter("command");
-		ActionEnum command = ActionEnum.get(receiveCommand);
-		System.out.println(command);
-		
-		RequestDispatcher requestDispatcher;
-		switch (command) {
-		case LOGIN:
-			processLogIn(request, response);
-			break;
-		case LOGOUT:
-			processLogOut(request, response);
-			break;
-		case REGISTER:
-			requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE);
-			requestDispatcher.forward(request, response);
-			break;
-		default:
-			requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE);
-			requestDispatcher.forward(request, response);
-		}
-	}
-	
-	private void processLogOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().invalidate();
-		
-		CookieEnum cookieEnum = CookieEnum.REMEMBER_USER;
-		String rememeberCookieValue = CookieSupportServlet.processCookie(request, response, cookieEnum, true);
-		RememberUserManager.remove(rememeberCookieValue);
-		
-		request.getRequestDispatcher(HOMEPAGE).forward(request, response);
-	}
-	
-	private void processLogIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Served at [" + getServletName() + "]");
+        switch (command) {
+            case LOGIN:
+                ProcessLogInAction(request, response);
+                break;
+            case LOGOUT:
+                ProcessLogOut(request, response);
+                break;
+            case REGISTER:
+                ProcessRegisterAction(request, response);
+                break;
+            default:
+                ProcessDefaultAction(request, response);
+        }
+    }
+
+    private void ProcessLogOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().invalidate();
+
+        CookieEnum cookieEnum = CookieEnum.REMEMBER_USER;
+        String rememeberCookieValue = CookieSupportServlet.processCookie(request, response, cookieEnum, true);
+        RememberUserManager.remove(rememeberCookieValue);
+
+        request.getRequestDispatcher(HOMEPAGE).forward(request, response);
+    }
+
+    private void ProcessLogInAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {        
+        System.out.println("Process Login at [" + getServletName() + "]");
         request.setCharacterEncoding(webpage_tools.PrintTools.getUTF8());
         HttpSession session = request.getSession(true);
+        RequestDispatcher requestDispatcher;
+        
+        Object loginUser = session.getAttribute(AttributeEnum.USER.name());
+        if(Objects.nonNull(loginUser)) {
+            requestDispatcher = request.getRequestDispatcher(HOMEPAGE);
+            requestDispatcher.forward(request, response);
+            return;
+        }
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -98,34 +103,49 @@ public final class UserServlet extends HttpServlet {
         Optional<User> user = userDAO.Authenticate(username, password);
         boolean doRememeber = remember != null;
 
-        RequestDispatcher requestDispatcher;
-        if (user.isPresent()) 
-        {
-            if (doRememeber) 
-            {
+        
+        if (user.isPresent()) {
+            if (doRememeber) {
                 createRememberUserCookie(response, user.get());
             }
             session.setAttribute(AttributeEnum.USER.name(), user.get());
             requestDispatcher = request.getRequestDispatcher(HOMEPAGE);
             requestDispatcher.forward(request, response);
-        } 
-        else 
-        {
+        } else {
             ErrorEnum message = ErrorEnum.LOGIN_ERROR;
             session.setAttribute(message.name(), message.getMessage());
             requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE);
             requestDispatcher.forward(request, response);
         }
-	}
-	
-	private void createRememberUserCookie(HttpServletResponse response, User user) 
-    {
+    }
+
+    private void createRememberUserCookie(HttpServletResponse response, User user) {
         String userHashCode = Integer.toString(user.hashCode());
         CookieSupportServlet.addCookie(response, CookieEnum.REMEMBER_USER, userHashCode);
         //Add this user to rememeber maps for later auto-login function with rememberUserCookie
-        if (RememberUserManager.get(userHashCode).isEmpty())
-        {
+        if (RememberUserManager.get(userHashCode).isEmpty()) {
             RememberUserManager.add(userHashCode, user);
+        }
+    }
+
+    private void ProcessRegisterAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE);
+        requestDispatcher.forward(request, response);
+    }
+    
+    private void ProcessDefaultAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Process Default action at UserServlet");
+        HttpSession session = request.getSession();
+        Object user = session.getAttribute(AttributeEnum.USER.name());
+        
+        RequestDispatcher requestDispatcher;
+        if(user == null) {
+            requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE);
+            requestDispatcher.forward(request, response);
+        }
+        else {
+            requestDispatcher = request.getRequestDispatcher(HOMEPAGE);
+            requestDispatcher.forward(request, response);
         }
     }
 

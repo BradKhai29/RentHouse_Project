@@ -74,10 +74,10 @@
                                                     </div>
                                                 </div>
 												<div class="d-grid mt-2">
-													<button type="submit" name="command" value="login" class="btn btn-warning btn-lg">
+													<button type="submit" name="action" value="login" class="btn btn-warning btn-lg">
                                                         Đăng nhập
                                                     </button>
-                                                    <a class="btn btn-link btn-lg" href="user?command=register">
+                                                    <a class="btn btn-link btn-lg" href="user?action=register">
                                                         Chưa có tài khoản, đăng kí ngay
                                                     </a>
 												</div>
