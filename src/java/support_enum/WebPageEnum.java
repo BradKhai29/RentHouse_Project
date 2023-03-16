@@ -10,7 +10,7 @@ public enum WebPageEnum {
 	ADMIN_LOGIN("login"),
 	ADMIN_DASHBOARD("admin_dashboard"),
 	ADMIN_UPDATE_INFO("update_info"),
-	CREATE_NEW_POST("create_new_post"),
+	CREATE_NEW_RENT_HOUSE("create_new_rent_house"),
 	RENT_HOUSE_DETAIL("detail"),
 	RENT_HOUSE_UPDATE_INFO("update_info");
 	

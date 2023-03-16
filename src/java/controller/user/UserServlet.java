@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import controller.cookie.CookieSupportServlet;
 import support_enum.ActionEnum;
 import entity.user.User;
@@ -20,9 +19,6 @@ import webpage_tools.URLBuilder;
 import webpage_tools.URLBuilderFactory;
 import support_enum.*;
 
-/**
- * Servlet implementation class UserServlet
- */
 @WebServlet({"/UserServlet", "/user"})
 public final class UserServlet extends HttpServlet {
 
@@ -31,16 +27,19 @@ public final class UserServlet extends HttpServlet {
 
     private static String HOMEPAGE = URL_BUILDER.addPage(WebPageEnum.HOME).getURL();
     private static String LOGIN_PAGE = URL_BUILDER
-            .addFolder(FolderEnum.USER)
-            .addPage(WebPageEnum.USER_LOGIN)
-            .getURL();
+                                        .addFolder(FolderEnum.USER)
+                                        .addPage(WebPageEnum.USER_LOGIN)
+                                        .getURL();
     private static String REGISTER_PAGE = URL_BUILDER
-            .addFolder(FolderEnum.USER)
-            .addPage(WebPageEnum.USER_REGISTER)
-            .getURL();
+                                        .addFolder(FolderEnum.USER)
+                                        .addPage(WebPageEnum.USER_REGISTER)
+                                        .getURL();
+    private static final String RENT_HOUSE_CREATE_PAGE = URL_BUILDER
+                                                        .addFolder(FolderEnum.RENT_HOUSE)
+                                                        .addPage(WebPageEnum.CREATE_NEW_RENT_HOUSE)
+                                                        .getURL();
 
     private static final UserDAO userDAO;
-
     static {
         userDAO = new UserDAO();
     }
@@ -67,6 +66,9 @@ public final class UserServlet extends HttpServlet {
                 break;
             case REGISTER:
                 ProcessRegisterAction(request, response);
+                break;
+            case CREATE:
+                RedirectToRentHousePage(request, response);
                 break;
             default:
                 ProcessDefaultAction(request, response);
@@ -130,6 +132,11 @@ public final class UserServlet extends HttpServlet {
 
     private void ProcessRegisterAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE);
+        requestDispatcher.forward(request, response);
+    }
+    
+    private void RedirectToRentHousePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(RENT_HOUSE_CREATE_PAGE);
         requestDispatcher.forward(request, response);
     }
     

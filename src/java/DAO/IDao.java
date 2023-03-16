@@ -8,6 +8,7 @@ public interface IDao<T> {
     Optional<T> get(int id);
     
     Map<Integer, T> getAll();
+    Map<Integer, T> getAll(int id);
     
     void insert(T obj);
     
@@ -19,12 +20,7 @@ public interface IDao<T> {
      */
     void update(int id, String updateField, String updateValue);
     
-    /**
-     * This will follow the order of the parameter to update
-     * @param id
-     * @param updateValue : String array of Update Value
-     */
-    void update(int id, String... updateValue);
+    void update(T obj);
     
     void delete(int id);
 }

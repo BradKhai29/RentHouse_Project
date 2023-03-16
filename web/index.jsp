@@ -17,6 +17,9 @@
     <a href="user?action=register">Get to register page</a>
     ${USER == null ? '' : USER.username}
     <c:if test="${USER != null}">
+        <div class="text-danger">
+            <br><a href="user?action=create">Create new post</a>
+        </div>
      	<br><a href="user?action=logout">log out</a>
     </c:if>
     <br>
