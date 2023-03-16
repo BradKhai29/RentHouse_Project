@@ -1,4 +1,6 @@
 package controller.user;
+import entity.user.User;
+import entity.user.UserDAO;
 import controller.validation.InputValidation;
 
 import java.io.IOException;

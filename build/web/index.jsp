@@ -20,7 +20,7 @@
      	<br><a href="user?command=logout">log out</a>
     </c:if>
     <br>
-    <a href="user?command=login">Login page</a>
+    <a href="user">Login page</a>
         <header class="container-fluid">
         </header>
         <main class="container-fluid">
