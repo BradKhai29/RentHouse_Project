@@ -6,6 +6,7 @@ public enum ServletEnum {
     RENT_HOUSE_DETAIL("rent_house/detail"),
     RENT_HOUSE_SEARCH("rent_house/search"),
     USER("user"),
+    USER_UPDATE("user/update"),
     USER_COMMENT("user/comment");
 
     private String URL;

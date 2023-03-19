@@ -10,6 +10,7 @@ public enum ActionEnum {
     COMMENT,
     CONFIRM_CREATE,
     UPDATE,
+    UPDATE_PASSWORD,
     EDIT,
     CONFIRM_UPDATE,
     DELETE,;

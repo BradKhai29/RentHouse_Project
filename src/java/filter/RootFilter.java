@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import support_enum.AttributeEnum;
 import support_enum.ServletEnum;
 import support_enum.URLEnum;
@@ -67,6 +69,9 @@ public final class RootFilter implements Filter {
         }
         
         if(rootURL == null) InitRootURLs(application);
+        HttpSession session = ((HttpServletRequest)request).getSession();
+        Object checkPoint = session.getAttribute(AttributeEnum.checkpoint.name());
+        if(checkPoint == null) InitPagination((HttpServletRequest)request);
       
         chain.doFilter(request, response);
     }
@@ -76,10 +81,18 @@ public final class RootFilter implements Filter {
         //Set some URLs
         application.setAttribute(URLEnum.root.name(), rootURL);
         application.setAttribute(URLEnum.user.name(), rootURL.concat(ServletEnum.USER.getURL()));
+        application.setAttribute(URLEnum.user_update.name(), rootURL.concat(ServletEnum.USER_UPDATE.getURL()));
+        application.setAttribute(URLEnum.user_comment.name(), rootURL.concat(ServletEnum.USER_COMMENT.getURL()));
         application.setAttribute(URLEnum.rent_house.name(), rootURL.concat(ServletEnum.RENT_HOUSE.getURL()));
         application.setAttribute(URLEnum.rent_house_detail.name(), rootURL.concat(ServletEnum.RENT_HOUSE_DETAIL.getURL()));
         application.setAttribute(URLEnum.rent_house_search.name(), rootURL.concat(ServletEnum.RENT_HOUSE_SEARCH.getURL()));
-        application.setAttribute(URLEnum.user_comment.name(), rootURL.concat(ServletEnum.USER_COMMENT.getURL()));
+    }
+    
+    private void InitPagination(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute(AttributeEnum.checkpoint.name(), "");
+        session.setAttribute(AttributeEnum.lowerPageNum.name(), 1);
+        session.setAttribute(AttributeEnum.upperPageNum.name(), 9);
     }
 
     public void init(FilterConfig fConfig) throws ServletException {

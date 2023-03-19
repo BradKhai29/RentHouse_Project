@@ -3,6 +3,7 @@ package support_enum;
 public enum URLEnum {
     root,
     user,
+    user_update,
     user_comment,
     rent_house,
     rent_house_detail,

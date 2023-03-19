@@ -39,7 +39,7 @@
                                     <i class="fa-solid fa-circle-user icon"></i> ${USER.username}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
+                                    <li><a class="dropdown-item" href="${user}?action=update">Cài đặt tài khoản</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="">Đăng bài</a></li>
                                     <li><hr class="dropdown-divider"></li>
@@ -79,64 +79,76 @@
                     </button>
                 </div>
             </div>
-            <section class="album py-5 mt-0 bg-light">
-                <div class="container">
+            <section class="album py-5 mt-0 bg-light rounded-3">
+                <div class="container rounded-3">
+                    <nav aria-label="Page navigation example" class="d-flex justify-content-end">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="${root}/page?prev=1">Trước</a></li>
+                            <c:forEach var="i" begin="1" end="9">
+                                <li class="page-item ${currentPageNum == i ? 'active' : ''}"><a class="page-link" href="${root}/page?page=${i}">${i}</a></li>
+                            </c:forEach>
+                            <li class="page-item"><a class="page-link" href="${root}/page?next=1">Sau</a></li>
+                        </ul>
+                    </nav>
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-                        <c:forEach var="rentHouse" items="${selectedRentHouseList}">
-                            <div class="col" id="rentHouse${rentHouse.houseID}">
-                                <form class="card shadow-sm" action="${rent_house_detail}" method="post">
-                                    <input type="text" name="houseID" value="${rentHouse.houseID}" hidden>
-                                    <div class="position-relative">
-                                        <button type="submit" class="card-img-top border-0 p-0 m-0">
-                                            <img width="100%" height="320" class="card-img-top" src="${root}/${rentHouse.imgURL}" alt="">
-                                        </button>
-                                        <button class="btn btn-danger position-absolute bottom-0 end-0">
-                                            <i class="fa-regular fa-heart"></i>
-                                        </button>
-                                    </div>
-                                    <ul class="card-body m-0 py-0">
-                                        <div class="d-flex justify-content-between align-items-center pt-2">
-                                            <div class="fw-bold">
-                                                <span class="fw-bold text-primary">Nhà trọ</span>
+                        <c:forEach var="rentHouseEntry" items="${rentHouseMap}">
+                            <c:set var="rentHouse" value="${rentHouseEntry.value}"></c:set>
+                            <c:if test="${rentHouse.houseID >= lowerPageNum && rentHouse.houseID <= upperPageNum}">
+                                <div class="col" id="rentHouse${rentHouse.houseID}">
+                                    <form class="card shadow-sm" action="${rent_house_detail}" method="post">
+                                        <input type="text" name="houseID" value="${rentHouse.houseID}" hidden>
+                                        <div class="position-relative">
+                                            <button type="submit" class="card-img-top border-0 p-0 m-0">
+                                                <img width="100%" height="320" class="card-img-top" src="${root}/${rentHouse.imgURL}" alt="">
+                                            </button>
+                                            <button class="btn btn-danger position-absolute bottom-0 end-0">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
+                                        </div>
+                                        <ul class="card-body m-0 py-0">
+                                            <div class="d-flex justify-content-between align-items-center pt-2">
+                                                <div class="fw-bold">
+                                                    <span class="fw-bold text-primary">Nhà trọ</span>
+                                                </div>
+                                            </div>
+                                            <p class="mb-1">${rentHouse.houseName}</p>
+                                            <p class="mb-1">
+                                                <c:forEach var="i" begin="1" end="3">
+                                                    <i class="fa-solid fa-star text-warning"></i>
+                                                </c:forEach>
+                                                <c:forEach var="i" begin="1" end="2">
+                                                    <i class="fa-solid fa-star text-muted"></i>
+                                                </c:forEach>
+                                            </p>
+                                        </ul>
+                                        <div class="card-body row mt-0 pt-2">
+                                            <div class="col">
+                                                <span>
+                                                    <i class="fa-solid fa-dollar-sign"></i>
+                                                    Giá: ${rentHouse.price}
+                                                </span>
+                                            </div>
+                                            <div class="col">
+                                                <span>
+                                                    <i class="fa-solid fa-layer-group"></i>
+                                                    Diện tích: ${rentHouse.area} m<sup>2</sup>
+                                                </span>
                                             </div>
                                         </div>
-                                        <p class="mb-1">${rentHouse.houseName}</p>
-                                        <p class="mb-1">
-                                            <c:forEach var="i" begin="1" end="3">
-                                                <i class="fa-solid fa-star text-warning"></i>
-                                            </c:forEach>
-                                            <c:forEach var="i" begin="1" end="2">
-                                                <i class="fa-solid fa-star text-muted"></i>
-                                            </c:forEach>
-                                        </p>
-                                    </ul>
-                                    <div class="card-body row mt-0 pt-2">
-                                        <div class="col">
-                                            <span>
-                                                <i class="fa-solid fa-dollar-sign"></i>
-                                                Giá: ${rentHouse.price}
-                                            </span>
-                                        </div>
-                                        <div class="col">
-                                            <span>
-                                                <i class="fa-solid fa-layer-group"></i>
-                                                Diện tích: ${rentHouse.area} m<sup>2</sup>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <hr class="dropdown-divider mb-0">
-                                    <div class="card-footer">
-                                        <div class="d-flex justify-content-between align-items-center pt-1">
-                                            <div class="card-title">
-                                                ${rentHouse.streetNumber} ${rentHouse.streetName}, ${rentHouse.districtName}
-                                            </div>
-                                            <div class="card-title">
-                                                <i class="fa-solid fa-sliders"></i>
+                                        <hr class="dropdown-divider mb-0">
+                                        <div class="card-footer">
+                                            <div class="d-flex justify-content-between align-items-center pt-1">
+                                                <div class="card-title">
+                                                    ${rentHouse.streetNumber} ${rentHouse.streetName}, ${rentHouse.districtName}
+                                                </div>
+                                                <div class="card-title">
+                                                    <i class="fa-solid fa-sliders"></i>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
+                                    </form>
+                                </div>
+                            </c:if>
                         </c:forEach>
                     </div>
                 </div>

@@ -34,6 +34,10 @@ public final class UserServlet extends HttpServlet {
                                         .addFolder(FolderEnum.USER)
                                         .addPage(WebPageEnum.USER_REGISTER)
                                         .getURL();
+    private static String UPDATE_INFO_PAGE = URL_BUILDER
+                                        .addFolder(FolderEnum.USER)
+                                        .addPage(WebPageEnum.USER_UPDATE_INFO)
+                                        .getURL();
     private static final String RENT_HOUSE_CREATE_PAGE = URL_BUILDER
                                                         .addFolder(FolderEnum.RENT_HOUSE)
                                                         .addPage(WebPageEnum.CREATE_NEW_RENT_HOUSE)
@@ -66,6 +70,9 @@ public final class UserServlet extends HttpServlet {
                 break;
             case REGISTER:
                 ProcessRegisterAction(request, response);
+                break;
+            case UPDATE: 
+                request.getRequestDispatcher(UPDATE_INFO_PAGE).forward(request, response);
                 break;
             default:
                 ProcessDefaultAction(request, response);

@@ -2,6 +2,10 @@ package support_enum;
 
 public enum AttributeEnum {
     root,
+    checkpoint,
+    currentPageNum,
+    upperPageNum,
+    lowerPageNum,
     REGISTER_USER,
     STEP1,
     STEP2,
@@ -17,7 +21,9 @@ public enum AttributeEnum {
     streetMap,
     selectedStreetMap,
     rentHouseMap,
-    selectedRentHouseList;
+    selectedRentHouseList,
+    UPDATE_PROFILE_CHECKPOINT,
+    UPDATE_PASSWORD_CHECKPOINT;
 
     @Override
     public String toString() {

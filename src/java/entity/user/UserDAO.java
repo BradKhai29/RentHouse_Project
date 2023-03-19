@@ -14,8 +14,8 @@ public class UserDAO extends BaseDAO<User> {
     private static final String SELECT_ALL = "SELECT * FROM " + UserTable;
     private static final String LOGIN_USER = "SELECT * FROM " + UserTable + " WHERE username = ?";
     private static final String CHECK_EXIST_USERNAME = "SELECT userID FROM " + UserTable + " WHERE username = ?";
-    private static String UPDATE_PASSWORD = "UPDATE " + UserTable + " \n"
-            + "SET password = ? \n"
+    private static String UPDATE_INFO = "UPDATE " + UserTable + " \n"
+            + "SET fullname = ?, phoneNumber = ?, gender = ?, password = ? \n"
             + "WHERE userID = ?;";
     
     //In app usage map
@@ -63,9 +63,10 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    public Optional<User> get(int id) {
+    public Optional<User> get(int providerID) {
+        System.out.println("Provider : " + providerID);
         if(userMap == null) getAll();
-        User user = userMap.get(id);
+        User user = userMap.get(providerID);
         return (user == null) ? Optional.empty() : Optional.of(user);
     }
 
@@ -73,7 +74,6 @@ public class UserDAO extends BaseDAO<User> {
     public Map<Integer, User> getAll() {
         if (userMap == null) {
             userMap = new HashMap<>();
-            
             openQuery(SELECT_ALL);
             
             try {
@@ -156,9 +156,25 @@ public class UserDAO extends BaseDAO<User> {
 
     }
     
+    //fullname = ?, phoneNumber = ?, gender = ?, password = ?
     @Override
-    public void update(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void update(User user) {
+        openQuery(UPDATE_INFO);
+        
+        try {
+            query.setString(1, user.getFullname());
+            query.setString(2, user.getPhoneNumber());
+            query.setBoolean(3, user.getGender());
+            query.setString(4, user.getPassword());
+            query.setInt(5, user.getUserID());
+            query.executeUpdate();
+            
+            System.out.println("Update info at DAO success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        closeQuery();
     }
 
     @Override

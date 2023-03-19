@@ -91,8 +91,10 @@ public class CommentServlet extends HttpServlet {
         
         PrintTools.print(user, rentHouse, commentDetails);
         
-        Comment comment = new Comment(0, 5, commentDetails, userID, houseID);
+        Comment comment = new Comment(1, 5, commentDetails, userID, houseID);
+        comment.setCommentID(comment.hashCode());
         commentDAO.insert(comment);
+        
         rentHouse.getCommentMap().put(comment.hashCode(), comment);
         request.getRequestDispatcher(RENT_HOUSE_DETAIL_PAGE).forward(request, response);
     }
@@ -127,7 +129,10 @@ public class CommentServlet extends HttpServlet {
         String inputCommentID = request.getParameter("commentID");
         int commentID = InputValidation.getNumber(inputCommentID);
         commentDAO.delete(commentID);
+        HttpSession session = request.getSession();
         
+        RentHouse rentHouse = (RentHouse)session.getAttribute(AttributeEnum.rentHouse.name()); 
+        rentHouse.getCommentMap().remove(commentID);
         processDefaultAction(request, response);
     }
     
