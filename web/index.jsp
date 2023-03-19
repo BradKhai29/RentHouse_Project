@@ -1,93 +1,137 @@
-<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); %>
+<% response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Default JSP Page</title>
+        <title>HomePage</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=devce-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+        <link rel="stylesheet" href="assets/blog.css">
+        <link rel="stylesheet" href="assets/style.css">
+        <script src="assets/script.js"></script>
     </head>
     <body>
-    <a href="${user}?action=register">Get to register page</a>
-    ${USER == null ? '' : USER.username}
-    <c:if test="${USER != null}">
-        <div class="text-danger">
-            <br><a href="${rent_house}">Tạo bài đăng</a>
-        </div>
-     	<br><a href="${user}?action=logout">Đăng xuất</a>
-    </c:if>
-    <br>
-    <a href="${user}">Đăng nhập</a>
-        <header class="container-fluid">
-            <div class="row nav navbar">
-                <div class="col">f</div>
-                <div class="col">d</div>
-                <div class="col pe-5">
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item me-3">
-                            <a class="btn btn-danger active" aria-current="page" href="${user}">Đăng nhập</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-success" href="${user}?action=register">Đăng ký</a>
-                        </li>
-                    </ul>
+        <header class="container">
+            <section class="blog-header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col-4 pt-1">
+                        <a class="link-secondary" href="#">Subscribe</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a class="blog-header-logo text-dark" href="#">
+                            Renty
+                        </a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <a class="link-secondary" href="#" aria-label="Search" onclick="popUpSearchBar()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                        </a>
+                        <c:if test="${USER == null}">
+                            <a class="btn btn-outline-danger mybtn-outline" aria-current="page" href="${user}">Đăng nhập</a>
+                            <a class="btn mybtn ms-3" href="${user}?action=register">Đăng ký</a>
+                        </c:if>
+                        <c:if test="${USER != null}">
+                            <div class="dropdown">
+                                <button class="btn mybtn dropdown-toggle ms-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-circle-user icon"></i> ${USER.username}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="">Đăng bài</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="${user}?action=logout">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </c:if>
+                    </div>
                 </div>
-            </div>
+            </section>
         </header>
-        <main class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <div class="row">Tìm kiếm theo quận</div>
-                    <form class="row d-flex" action="${rent_house_search}" method="post">
-                        <c:forEach var="districtEntry" items="${districtMap}">
-                            <c:set var="district" value="${districtEntry.value}"></c:set>
-                            <button class="btn btn-success" type="submit" name="districtID" value="${district.districtID}">
-                                ${district.districtName}
-                            </button>
-                        </c:forEach>
-                    </form>
+        <main class="container">
+            <section class="p-4 p-md-5 mb-4 text-white rounded bg-dark" id="jumbotron">
+                <div class="col-md-6 px-0">
+                    <h1 class="display-4 fst-italic">Dễ dàng tìm nhà trọ</h1>
+                    <p class="lead my-3">Lướt xuống để khám phá thêm</p>
+                </div>
+            </section>
+            <div class="row my-2">
+                <div class="col d-flex justify-content-start pe-0">
+                    <section>
+                        <form class="nav d-flex justify-content-start" action="${rent_house_search}" method="post">
+                            <c:forEach var="districtEntry" items="${districtMap}">
+                                <c:set var="district" value="${districtEntry.value}"></c:set>
+                                <button class="btn border-0 me-2 mybtn-outline" type="submit" name="districtID" value="${district.districtID}">
+                                    ${district.districtName}
+                                </button>
+                            </c:forEach>
+                        </form>
+                    </section>
+                </div>
+                <div class="col-3 ps-0 d-flex justify-content-end">
+                    <button class="btn mybtn">
+                        <a href="${rent_house_search}" class="text-decoration-none text-light" target="_blank" rel="noopener noreferrer">
+                            Tất cả
+                        </a>
+                    </button>
                 </div>
             </div>
             <section class="album py-5 mt-0 bg-light">
                 <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <c:forEach var="rentHouseEntry" items="${applicationScope.rentHouseMap}">
-                            <c:set var="rentHouse" value="${rentHouseEntry.value}"></c:set>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                        <c:forEach var="rentHouse" items="${selectedRentHouseList}">
                             <div class="col" id="rentHouse${rentHouse.houseID}">
                                 <form class="card shadow-sm" action="${rent_house_detail}" method="post">
                                     <input type="text" name="houseID" value="${rentHouse.houseID}" hidden>
-                                    <div>
+                                    <div class="position-relative">
                                         <button type="submit" class="card-img-top border-0 p-0 m-0">
                                             <img width="100%" height="320" class="card-img-top" src="${root}/${rentHouse.imgURL}" alt="">
+                                        </button>
+                                        <button class="btn btn-danger position-absolute bottom-0 end-0">
+                                            <i class="fa-regular fa-heart"></i>
                                         </button>
                                     </div>
                                     <ul class="card-body m-0 py-0">
                                         <div class="d-flex justify-content-between align-items-center pt-2">
                                             <div class="fw-bold">
-                                                <span class="fw-bold text-primary">Tên nhà trọ</span> : ${rentHouse.houseName}
+                                                <span class="fw-bold text-primary">Nhà trọ</span>
                                             </div>
                                         </div>
+                                        <p class="mb-1">${rentHouse.houseName}</p>
+                                        <p class="mb-1">
+                                            <c:forEach var="i" begin="1" end="3">
+                                                <i class="fa-solid fa-star text-warning"></i>
+                                            </c:forEach>
+                                            <c:forEach var="i" begin="1" end="2">
+                                                <i class="fa-solid fa-star text-muted"></i>
+                                            </c:forEach>
+                                        </p>
                                     </ul>
+                                    <div class="card-body row mt-0 pt-2">
+                                        <div class="col">
+                                            <span>
+                                                <i class="fa-solid fa-dollar-sign"></i>
+                                                Giá: ${rentHouse.price}
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <span>
+                                                <i class="fa-solid fa-layer-group"></i>
+                                                Diện tích: ${rentHouse.area} m<sup>2</sup>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <hr class="dropdown-divider mb-0">
-                                    <div class="card-body mt-0">
-                                        <div class="d-flex justify-content-between align-items-center pt-2">
-                                            <h5 class="card-title">Giá cho thuê</h5>
-                                            <span class="badge fs-5 bg-warning text-muted">${rentHouse.price} VND</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center pt-2">
-                                            <h5 class="card-title">Địa chỉ</h5>
-                                            <span class="badge fs-5 bg-warning text-muted">${rentHouse.streetNumber} ${rentHouse.streetName}, ${rentHouse.districtName}</span>
-                                        </div>
+                                    <div class="card-footer">
                                         <div class="d-flex justify-content-between align-items-center pt-1">
-                                            <div class="btn-group">
-                                                <input type="text" name="productID" value="${product.productID}" hidden>
-                                                <button type="submit" class="rounded-start btn btn-outline-secondary">Xem chi tiết</button>
-                                                <button type="submit" class="btn btn-outline-secondary">
-                                                    Yêu thích
-                                                </button>
+                                            <div class="card-title">
+                                                ${rentHouse.streetNumber} ${rentHouse.streetName}, ${rentHouse.districtName}
+                                            </div>
+                                            <div class="card-title">
+                                                <i class="fa-solid fa-sliders"></i>
                                             </div>
                                         </div>
                                     </div>

@@ -5,6 +5,7 @@ import entity.FactoryDAO.FactoryDAO;
 import entity.comment.Comment;
 import entity.district.District;
 import entity.street.Street;
+import entity.user.User;
 import java.util.HashMap;
 import java.util.Map;
 import support_enum.FolderEnum;
@@ -25,6 +26,7 @@ public final class RentHouse {
     private Map<Integer, Comment> commentMap;
     private String streetName;
     private String districtName;
+    private User provider;
     private boolean haveNewComment = false;
 
     public RentHouse() {
@@ -166,6 +168,18 @@ public final class RentHouse {
     
     public void confirmComment() {
         haveNewComment = false;
+    }
+
+    public User getProvider() {
+        if(provider == null) {
+            IDao<User> userDao = FactoryDAO.getDao(FactoryDAO.USER);
+            provider = userDao.get(providerID).get();
+        }
+        return provider;
+    }
+
+    public void setProvider(User provider) {
+        this.provider = provider;
     }
     
     @Override

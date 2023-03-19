@@ -4,82 +4,75 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Default JSP Page</title>
+        <title>Detail rent house page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=devce-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+        <link rel="stylesheet" href="${root}/assets/blog.css">
+        <link rel="stylesheet" href="${root}/assets/style.css">
     </head>
     <body>
-        <header class="container-fluid">
-        </header>
-        <main class="container-fluid">
-            <div class="row">
-                <nav aria-label="breadcrumb" class="bg-dark text-light rounded-3 p-3 px-5 mb-4">
-                    <ol class="breadcrumb mb-0 fw-bold text-light">
-                        <li class="breadcrumb-item">
-                            <a href="${root}" class="text-light">Trang chủ</a>
-                        </li>
-                        <li class="breadcrumb-item active text-light" aria-current="page">
-                            <a href="${root}/user" class="text-light">Quản lý bài đăng</a>
-                        </li>
-                        <li class="breadcrumb-item active text-light" aria-current="page">Tạo bài đăng</li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <section class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-6 rounded-3">
-                                <div class="white-box text-center rounded-3">
-                                    <label for="productImg" class="form-label">
-                                        <picture class="card-img-top rounded-3" width="100%" height="340px">
-                                            <img id="output" class="card-img-top rounded-3"
-                                                 width="100%" height="340px"
-                                                 src="${root}/${rentHouse.imgURL}"
-                                                 alt="product image">
-                                        </picture>
-                                    </label>
-                                </div>
+        <header class="container">
+            <section class="blog-header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                    <div class="col-4 pt-1">
+                        <a class="link-secondary" href="#">Subscribe</a>
+                    </div>
+                    <div class="col-4 text-center">
+                        <a class="blog-header-logo text-dark" href="#">
+                            Renty
+                        </a>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <a class="link-secondary" href="#" aria-label="Search" onclick="popUpSearchBar()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                        </a>
+                        <c:if test="${USER == null}">
+                            <a class="btn btn-outline-danger mybtn-outline" aria-current="page" href="${user}">Đăng nhập</a>
+                            <a class="btn mybtn ms-3" href="${user}?action=register">Đăng ký</a>
+                        </c:if>
+                        <c:if test="${USER != null}">
+                            <div class="dropdown">
+                                <button class="btn mybtn dropdown-toggle ms-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-circle-user icon"></i> ${USER.username}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="">Đăng bài</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="${user}?action=logout">Đăng xuất</a></li>
+                                </ul>
                             </div>
-                            <section class="col-lg-7 col-md-7 col-sm-6 mt-0">
-                                <div class="d-flex justify-content-start mb-2">
-                                    <!-- Button section -->
-                                    <a href="${root}" class="rounded-3 btn btn-primary border-2 fw-bold">
-                                        <i class="fa-solid fa-backward"></i> Về lại trang chủ
-                                    </a>
-                                </div>
-                                <h5 class="input-group mb-3">
-                                    <span class="input-group-text col-3" id="inputGroup-sizing-default">Tên nhà trọ</span>
-                                    <input type="text" name="houseName" class="form-control fw-bold col-8" value="${rentHouse.houseName}" disabled>
-                                </h5>
-                                <h5 class="input-group mb-3">
-                                    <span class="input-group-text col-3" id="inputGroup-sizing-default">Mô tả nhà trọ</span>
-                                    <textarea name="details" class="form-control fw-bold col-8" disabled>${rentHouse.details}</textarea>
-                                </h5>
-                                <h5 class="input-group mb-3">
-                                    <span class="input-group-text col-3" id="inputGroup-sizing-default">Diện tích</span>
-                                    <input type="number" name="area" class="form-control fw-bold col-8" value="${rentHouse.area}" disabled>
-                                </h5>
-                                <h5 class="input-group mb-3">
-                                    <span class="input-group-text col-3" id="inputGroup-sizing-default">Giá cho thuê</span>
-                                    <input type="number" name="price" class="form-control fw-bold col-8" value="${rentHouse.price}" disabled>
-                                </h5>
-                                <h5 class="input-group mb-3">
-                                    <label class="input-group-text col-3" for="typeName">Tên Quận</label>
-                                    <select class="form-select fw-bold col-8" disabled>
-                                        <option>${rentHouse.districtName}</option>
-                                    </select>
-                                </h5>
-                                <h5 class="input-group mb-3">
-                                    <label class="input-group-text col-3" for="typeName">Tên Đường</label>
-                                    <select class="form-select fw-bold col-8" disabled>
-                                        <option>${rentHouse.streetName}</option>
-                                    </select>
-                                </h5>
-                            </section>
-                        </section>
+                        </c:if>
+                    </div>
+                </div>
+            </section>
+        </header>
+        <main class="container">
+            <div class="row">
+                <div class="col-8">
+                    <div class="white-box rounded-3">
+                        <img id="output" class="card-img-top img-fluid rounded-3"
+                                 width="100%" height="300px"
+                                 src="${root}/${rentHouse.imgURL}"
+                                 alt="product image">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                 class="rounded-circle img-fluid" style="width: 150px;">
+                            <p class="text-muted fs-5 fw-light">Được đăng bởi</p>
+                            <h4 class="my-0 py-0">${rentHouse.provider.fullname}</h4>
+                            <div class="d-flex justify-content-center mb-2">
+                                <button class="btn btn-success fw-bold">
+                                    Liên hệ: ${rentHouse.provider.phoneNumber}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

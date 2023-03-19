@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap');
+
+:root{
+    --violet: rgb(112, 101, 240);
+    --white: rgb(255, 255, 255);
+    --light-violet: rgb(227, 225, 248);
+    --blue: rgb(94, 176, 239);
+    --deep-blue: rgb(36, 53, 90);
+}
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.mybtn {
+    background-color: var(--violet);
+    color: var(--white);
+}
+
+.mybtn-outline {
+    color: rgb(25, 15, 15);
+    border-color: var(--light-violet)!important;
+}
+
+.mybtn-outline:hover{
+    background-color: var(--violet);
+    color: var(--white);
+}
+
+.violet-color{
+    color: var(--violet);
+}

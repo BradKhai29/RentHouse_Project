@@ -7,17 +7,20 @@ import java.util.Optional;
 import entity.DAO.BaseDAO;
 import java.util.HashMap;
 
-public class UserDAO extends BaseDAO<User> {
-
+public class UserDAO extends BaseDAO<User> {    
     private static final String UserTable = "InAppUser";
     private static final String REGISTER_NEW_USER = "INSERT INTO " + UserTable + " (username, password, fullname, phoneNumber, gender, userRole)"
             + "VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String SELECT_ALL = "SELECT * FROM " + UserTable;
     private static final String LOGIN_USER = "SELECT * FROM " + UserTable + " WHERE username = ?";
     private static final String CHECK_EXIST_USERNAME = "SELECT userID FROM " + UserTable + " WHERE username = ?";
     private static String UPDATE_PASSWORD = "UPDATE " + UserTable + " \n"
             + "SET password = ? \n"
             + "WHERE userID = ?;";
-
+    
+    //In app usage map
+    private Map<Integer, User> userMap;
+    
     public Optional<User> Authenticate(String inputUserName, String inputPassword) {
         //Declare userOptional as empty optional
         Optional<User> userOptional = Optional.empty();
@@ -61,14 +64,42 @@ public class UserDAO extends BaseDAO<User> {
 
     @Override
     public Optional<User> get(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        if(userMap == null) getAll();
+        User user = userMap.get(id);
+        return (user == null) ? Optional.empty() : Optional.of(user);
     }
 
     @Override
     public Map<Integer, User> getAll() {
-        // TODO Auto-generated method stub
-        return null;
+        if (userMap == null) {
+            userMap = new HashMap<>();
+            
+            openQuery(SELECT_ALL);
+            
+            try {
+                ResultSet resultSet = query.executeQuery();
+                
+                while(resultSet.next()) 
+                {
+                    int userID = resultSet.getInt("userID");
+                    String username = resultSet.getString("username");
+                    String password = resultSet.getString("password");
+                    String fullname = resultSet.getString("fullname");
+                    boolean gender = resultSet.getBoolean("gender");
+                    String phoneNumber = resultSet.getString("phoneNumber");
+                    boolean userRole = resultSet.getBoolean("userRole");
+                    
+                    User user = new User(userID, username, password, fullname, gender, phoneNumber, userRole);
+                    userMap.put(userID, user);
+                }
+                System.out.println("Load user database success");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            closeQuery();
+        }
+        return userMap;
     }
 
     @Override
