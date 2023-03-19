@@ -5,9 +5,12 @@ public enum ActionEnum {
     LOGOUT,
     LOGIN,
     REGISTER,
+    CANCEL,
     CREATE,
+    COMMENT,
     CONFIRM_CREATE,
     UPDATE,
+    EDIT,
     CONFIRM_UPDATE,
     DELETE,;
 
@@ -27,9 +30,5 @@ public enum ActionEnum {
         }
 
         return resultCommand;
-    }
-
-    public boolean equals(ActionEnum inputEnum) {
-        return this.name().equalsIgnoreCase(inputEnum.name());
     }
 }

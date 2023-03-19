@@ -23,6 +23,7 @@ public class DistrictDAO extends BaseDAO<District>{
     @Override
     public Map<Integer, District> getAll() {
         if(districtMap == null) {
+            System.out.println("Start loading data");
             districtMap = new HashMap<>();
             openQuery(SELECT_ALL);
             

@@ -13,27 +13,28 @@ import javax.servlet.annotation.WebFilter;
 import webpage_tools.URLBuilderFactory;
 
 @WebFilter(dispatcherTypes = {
-				DispatcherType.REQUEST, 
-				DispatcherType.FORWARD, 
-				DispatcherType.INCLUDE, 
-				DispatcherType.ERROR
-		}
-					, urlPatterns = { "/cookieSupport", "/CookieSupportServlet" })
+    DispatcherType.REQUEST,
+    DispatcherType.FORWARD,
+    DispatcherType.INCLUDE,
+    DispatcherType.ERROR
+},
+         urlPatterns = {"/cookieSupport", "/CookieSupportServlet"})
 public final class CookieFilter implements Filter {
-	private static final String HOME_PAGE = URLBuilderFactory.getURL(support_enum.ServletEnum.HOME);
-	
-	public void destroy() {
-		
-	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Blocking user from calling Cookie Support Servlet");
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE);
-		requestDispatcher.forward(request, response);
-	}
+    private static final String HOME_PAGE = URLBuilderFactory.getURL(support_enum.ServletEnum.HOME);
 
-	public void init(FilterConfig fConfig) throws ServletException {
-		
-	}
+    public void destroy() {
+
+    }
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        System.out.println("Blocking user from calling Cookie Support Servlet");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(HOME_PAGE);
+        requestDispatcher.forward(request, response);
+    }
+
+    public void init(FilterConfig fConfig) throws ServletException {
+
+    }
 
 }

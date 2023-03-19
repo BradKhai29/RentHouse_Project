@@ -5,6 +5,7 @@ public enum ErrorEnum {
 	EXIST_USERNAME("Tên đăng nhập đã tồn tại, vui lòng chọn tên khác"),
 	LOGIN_ERROR("Tên đăng nhập hoặc mật khẩu không đúng"),
 	CONFIRM_PASSWORD_NOT_MATCH("Mật khẩu nhập lại không trùng khớp"),
+        PARAMETER_ERROR("Đã có lỗi xảy ra")
 	;
 	
 	private String message;

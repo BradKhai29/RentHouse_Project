@@ -5,6 +5,9 @@ public class Street {
     private int streetID;
     private int districtID;
     private String streetName;
+    
+    //In app attributes
+    private boolean isSelected;
 
     public Street() {
     }
@@ -37,5 +40,20 @@ public class Street {
 
     public void setDistrictID(int districtID) {
         this.districtID = districtID;
+    }
+
+    public boolean isIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer("Street : [");
+        buffer.append(streetID).append("] : [").append(streetName).append("]");
+        return buffer.toString();
     }
 }

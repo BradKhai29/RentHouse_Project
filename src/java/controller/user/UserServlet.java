@@ -55,7 +55,7 @@ public final class UserServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String receiveAction = request.getParameter("action");
         ActionEnum command = ActionEnum.get(receiveAction);
-        System.out.println(command);
+        System.out.println("Served at UserServlet : " + command);
 
         switch (command) {
             case LOGIN:
@@ -66,9 +66,6 @@ public final class UserServlet extends HttpServlet {
                 break;
             case REGISTER:
                 ProcessRegisterAction(request, response);
-                break;
-            case CREATE:
-                RedirectToRentHousePage(request, response);
                 break;
             default:
                 ProcessDefaultAction(request, response);
@@ -132,11 +129,6 @@ public final class UserServlet extends HttpServlet {
 
     private void ProcessRegisterAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(REGISTER_PAGE);
-        requestDispatcher.forward(request, response);
-    }
-    
-    private void RedirectToRentHousePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(RENT_HOUSE_CREATE_PAGE);
         requestDispatcher.forward(request, response);
     }
     

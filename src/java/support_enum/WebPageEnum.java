@@ -12,7 +12,8 @@ public enum WebPageEnum {
 	ADMIN_UPDATE_INFO("update_info"),
 	CREATE_NEW_RENT_HOUSE("create_new_rent_house"),
 	RENT_HOUSE_DETAIL("detail"),
-	RENT_HOUSE_UPDATE_INFO("update_info");
+	RENT_HOUSE_UPDATE_INFO("update_info"),
+        RENT_HOUSE_SEARCH("rent_house_search");
 	
 	private String page;
 	

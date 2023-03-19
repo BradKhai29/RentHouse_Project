@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <form class="row" action="user" method="post" enctype="multipart/form-data">
+                        <form class="row" action="${root}/user/rent_house" method="post">
                             <div class="col-lg-5 col-md-5 col-sm-6 rounded-3">
                                 <div class="white-box text-center rounded-3">
                                     <label for="productImg" class="form-label">
@@ -65,7 +65,7 @@
                                     </label>
                                     <input name="productImg" class="form-control" type="file"
                                     accept=".png, .jpg, .jpeg, .svg, .webp"
-                                    id="productImg" onchange="loadFile(event)">
+                                    id="productImg" onchange="loadFile(event)" formenctype="multipart/form-data">
                                 </div>
                             </div>
                             <section class="col-lg-7 col-md-7 col-sm-6 mt-0">
@@ -77,43 +77,45 @@
                                 </div>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Tên nhà trọ</span>
-                                    <input type="text" name="productName" class="form-control fw-bold col-8" required>
+                                    <input type="text" name="houseName" class="form-control fw-bold col-8" value="${rentHouse.houseName}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Mô tả nhà trọ</span>
-                                    <textarea name="details" class="form-control fw-bold col-8" required></textarea>
+                                    <textarea name="details" class="form-control fw-bold col-8" ${STEP2 == null ? 'required' : 'disabled'}>${rentHouse.details}</textarea>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Diện tích</span>
-                                    <input type="number" name="price" class="form-control fw-bold col-8" required>
+                                    <input type="number" name="area" class="form-control fw-bold col-8" value="${rentHouse.area}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Giá cho thuê</span>
-                                    <input type="number" name="price" class="form-control fw-bold col-8" required>
+                                    <input type="number" name="price" class="form-control fw-bold col-8" value="${rentHouse.price}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <label class="input-group-text col-3" for="typeName">Tên Quận</label>
-                                    <select name="productType" id="typeName" class="form-select fw-bold col-8" required>
-                                        <option value="1" selected>Kiếm Katana</option>
-                                        <option value="2">One Piece</option>
-                                        <option value="3">12 Cung hoàng đạo</option>
+                                    <select name="districtID" id="typeName" class="form-select fw-bold col-8" ${STEP2 == null ? 'required' : 'disabled'}>
+                                        <c:forEach var="districtEntry" items="${applicationScope.districtMap}">
+                                            <c:set var="district" value="${districtEntry.value}"></c:set>
+                                            <option value="${districtEntry.key}" ${rentHouse.districtID == districtEntry.key ? 'selected' : ''}>${district.districtName}</option>
+                                        </c:forEach>
                                     </select>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <label class="input-group-text col-3" for="typeName">Tên Đường</label>
-                                    <select name="productType" id="typeName" class="form-select fw-bold col-8" disabled>
-                                        <option value="1" selected>Kiếm Katana</option>
-                                        <option value="2">One Piece</option>
-                                        <option value="3">12 Cung hoàng đạo</option>
+                                    <select name="streetID" id="typeName" class="form-select fw-bold col-8" ${STEP2 == null ? 'disabled' : 'required'}>
+                                        <c:forEach var="streetEntry" items="${applicationScope.streetMap}">
+                                            <c:set var="street" value="${streetEntry.value}"></c:set>
+                                            <c:if test="${street.districtID == rentHouse.districtID}">
+                                                <option value="${streetEntry.key}" ${rentHouse.streetID == streetEntry.key ? 'selected' : ''}>${street.streetName}</option>
+                                            </c:if>
+                                        </c:forEach>
                                     </select>
                                 </h5>
                                 <div class="btn-group d-flex gap-2">
                                     <!-- Create button section -->
-                                    <input type="hidden" name="command" value="ADD_PRODUCT" hidden>
-                                    <button type="submit"
-                                    class="col-8 rounded-3 btn btn-warning border-2 fw-bold"
-                                    formaction="${root}/user/rent_house?action=create">
-                                        Tiếp tục
+                                    <button type="submit" name="action" value="${STEP2 == null ? 'create' : 'confirm_create'}"
+                                    class="col-8 rounded-3 btn btn-warning border-2 fw-bold">
+                                        ${STEP2 == null ? 'Tiếp tục' : 'Xác nhận đăng bài'}
                                     </button>
                                     <!-- Cancel Button section -->
                                     <button class="col-3 rounded-3 btn btn-danger border-2 fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#cancelCreate">
@@ -132,7 +134,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Không hủy</button>
-                                                    <a href="${root}/products" class="btn btn-primary fw-bold">Xác nhận hủy tạo mới</a>
+                                                    <a href="${root}/user/rent_house" class="btn btn-primary fw-bold">Xác nhận hủy tạo mới</a>
                                                 </div>
                                             </div>
                                         </div>

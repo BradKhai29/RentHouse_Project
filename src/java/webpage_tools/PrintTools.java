@@ -15,6 +15,14 @@ public class PrintTools {
             e.printStackTrace();
         }
     }
+    
+    public static void println(Object obj) {
+        print(obj);
+    }
+    
+    public static void print(Object... objects) {
+        for(Object object : objects) print(object);
+    }
 
     public static String getUTF8() {
         return UTF8;

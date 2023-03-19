@@ -1,6 +1,7 @@
 package entity.FactoryDAO;
 
 import entity.DAO.IDao;
+import entity.comment.CommentDAO;
 import entity.district.DistrictDAO;
 import entity.rent_house.RentHouseDAO;
 import entity.street.StreetDAO;
@@ -10,15 +11,18 @@ public enum FactoryDAO {
     DISTRICT,
     STREET,
     RENT_HOUSE,
-    USER;
+    USER,
+    COMMENT;
 
     private static DistrictDAO districtDAO;
     private static StreetDAO streetDAO;
     private static RentHouseDAO rentHouseDAO;
     private static UserDAO userDAO;
+    private static CommentDAO commentDAO;
 
     private static void loadDAO(FactoryDAO inputFactoryDAO) {
-        switch (inputFactoryDAO) {
+        switch (inputFactoryDAO) 
+        {
             case DISTRICT:
                 if(districtDAO == null) districtDAO = new DistrictDAO();
                 break;
@@ -31,24 +35,32 @@ public enum FactoryDAO {
             case USER:
                 if(userDAO == null) userDAO = new UserDAO();
                 break;
+            case COMMENT:
+                if(commentDAO == null) commentDAO = new CommentDAO();
+                break;
         }
     }
     
     public static IDao getDao(FactoryDAO inputFactoryDAO) {
         loadDAO(inputFactoryDAO);
+        
         IDao resultDAO = null;
-        switch (inputFactoryDAO) {
+        switch (inputFactoryDAO) 
+        {
             case DISTRICT:
                 resultDAO = districtDAO;
                 break;
             case STREET:
-                resultDAO =  streetDAO;
+                resultDAO = streetDAO;
                 break;
             case RENT_HOUSE:
-                resultDAO =  rentHouseDAO;
+                resultDAO = rentHouseDAO;
                 break;
             case USER:
                 resultDAO = userDAO;
+                break;
+            case COMMENT:
+                resultDAO = commentDAO;
                 break;
         } 
         return resultDAO;
