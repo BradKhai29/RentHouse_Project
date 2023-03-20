@@ -6,6 +6,9 @@
     --light-violet: rgb(227, 225, 248);
     --blue: rgb(94, 176, 239);
     --deep-blue: rgb(36, 53, 90);
+    --main-font-color: rgb(65, 56, 56);
+    --background-color:rgb(170, 211, 25);
+    --dark-yellow: rgb(171, 176, 17);
 }
 
 *{
@@ -29,4 +32,77 @@
 
 .violet-color{
     color: var(--violet);
+}
+
+input[type="number"]::-webkit-inner-spin-button{
+    display: none!important;
+}
+
+.navbar-scroll .nav-link,
+.navbar-scroll .navbar-toggler-icon,
+.navbar-scroll .navbar-brand {
+    color: #262626;
+}
+
+.navbar-scroll {
+    background-color: var(--background-color);
+}
+
+.navbar-scrolled .nav-link,
+.navbar-scrolled .navbar-toggler-icon,
+.navbar-scroll .navbar-brand {
+    color: #262626;
+}
+
+/* Color of the navbar AFTER scroll */
+.navbar-scrolled {
+    background-color: #fff;
+}
+
+/* An optional height of the navbar AFTER scroll */
+.navbar.navbar-scroll.navbar-scrolled {
+    padding-top: auto;
+    padding-bottom: auto;
+}
+.navbar-brand {
+    font-size: unset;
+    height: 3.5rem;
+}
+
+#icon{
+    text-decoration: none!important;
+    font-weight: bold;
+    color: var(--main-font-color);
+}
+
+.icon{
+    padding-right: 0.4rem;
+}
+
+.myslash{
+    width: 60px!important;
+    background-color: #dcd0ff!important;
+    height: 4px!important;
+}
+
+.d-yellow{
+    border: 1px solid #262626;
+    background-color: var(--dark-yellow);
+}
+
+/* register and login section */
+.divider:after,
+.divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+.h-custom {
+    height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+    .h-custom {
+        height: 100%;
+    }
 }

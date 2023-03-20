@@ -1,6 +1,7 @@
-package entity.comment;
+package entity.FactoryDAO;
 
 import entity.DAO.BaseDAO;
+import entity.comment.Comment;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;

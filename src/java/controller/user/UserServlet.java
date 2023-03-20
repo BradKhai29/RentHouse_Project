@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import controller.cookie.CookieSupportServlet;
 import support_enum.ActionEnum;
 import entity.user.User;
-import entity.user.UserDAO;
+import entity.FactoryDAO.UserDAO;
 import java.util.Objects;
 import webpage_tools.URLBuilder;
 import webpage_tools.URLBuilderFactory;
@@ -119,7 +119,7 @@ public final class UserServlet extends HttpServlet {
             requestDispatcher.forward(request, response);
         } else {
             ErrorEnum message = ErrorEnum.LOGIN_ERROR;
-            session.setAttribute(message.name(), message.getMessage());
+            request.setAttribute(message.name(), message.getMessage());
             requestDispatcher = request.getRequestDispatcher(LOGIN_PAGE);
             requestDispatcher.forward(request, response);
         }

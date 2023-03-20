@@ -1,7 +1,8 @@
-package entity.street;
+package entity.FactoryDAO;
 
 import entity.DAO.BaseDAO;
 import entity.district.District;
+import entity.street.Street;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;

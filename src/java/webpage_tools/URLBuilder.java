@@ -7,6 +7,7 @@ import support_enum.WebPageEnum;
 public final class URLBuilder {
 
     private final String rootURL = "/";
+    private String contextPath;
     private final StringBuilder builder;
 
     public URLBuilder() {
@@ -41,5 +42,13 @@ public final class URLBuilder {
         String resultURL = builder.toString();
         resetBuilder();
         return resultURL;
+    }
+    
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
+    
+    public String getURLWithContextPath() {
+        return contextPath.concat(getURL());
     }
 }

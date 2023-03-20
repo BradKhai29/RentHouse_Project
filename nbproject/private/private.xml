@@ -4,12 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="KHOA_RENTHOUSE">
             <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/web/index.jsp</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/support_enum/ServletEnum.java</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/entity/user/UserDAO.java</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/controller/user/UserServlet.java</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/support_enum/AttributeEnum.java</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/controller/user/UserUpdateInfoServlet.java</file>
-            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/web/user/update_info.jsp</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/entity/FactoryDAO/UserDAO.java</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/controller/pagination/PaginationServlet.java</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/controller/favorRentHouseMap/FavorRentHouseMapServlet.java</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/entity/user/User.java</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/filter/CookieFilter.java</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/web/user/favor_list.jsp</file>
+            <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/controller/rent_house/RentHouseServlet.java</file>
             <file>file:/D:/Working_space/PRJ301_project/NETBEANS_ONLY/RentHouse_Project/src/java/filter/RootFilter.java</file>
         </group>
     </open-files>

@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=devce-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="${root}/assets/blog.css">
         <link rel="stylesheet" href="${root}/assets/style.css">
     </head>
     <body>
@@ -20,20 +20,17 @@
             <section class="blog-header py-3">
                 <div class="row flex-nowrap justify-content-between align-items-center">
                     <div class="col-4 pt-1">
-                        <a class="link-secondary" href="#">Subscribe</a>
+                        <a class="link-secondary" href=""></a>
                     </div>
                     <div class="col-4 text-center">
-                        <a class="blog-header-logo text-dark" href="${root}">
+                        <a class="blog-header-logo text-dark text-uppercase" href="${root}">
                             Renty
                         </a>
                     </div>
                     <div class="col-4 d-flex justify-content-end align-items-center">
-                        <a class="link-secondary" href="#" aria-label="Search" onclick="popUpSearchBar()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-                        </a>
                         <c:if test="${USER == null}">
-                            <a class="btn btn-outline-danger mybtn-outline" aria-current="page" href="${user_update}">Đăng nhập</a>
-                            <a class="btn mybtn ms-3" href="${user_update}?action=register">Đăng ký</a>
+                            <a class="btn btn-outline-danger mybtn-outline" aria-current="page" href="${user}">Đăng nhập</a>
+                            <a class="btn mybtn ms-3" href="${user}?action=register">Đăng ký</a>
                         </c:if>
                         <c:if test="${USER != null}">
                             <div class="dropdown">
@@ -41,8 +38,12 @@
                                     <i class="fa-solid fa-circle-user icon"></i> ${USER.username}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="">Đăng bài</a></li>
+                                    <li><a class="dropdown-item" href="${user}?action=update">Cài đặt tài khoản</a></li>
                                     <li><hr class="dropdown-divider"></li>
+                                    <c:if test="${USER.userRole}">
+                                        <li><a class="dropdown-item" href="${rent_house}">Đăng bài</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    </c:if>
                                     <li><a class="dropdown-item" href="${user}?action=logout">Đăng xuất</a></li>
                                 </ul>
                             </div>
@@ -243,54 +244,23 @@
                         <!-- Grid column -->
                         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                             <!-- Content -->
-                            <h6 class="text-uppercase fw-bold">Company name</h6>
+                            <h6 class="text-uppercase fw-bold">Group name</h6>
                             <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
                             <p>
-                                Here you can use rows and columns to organize your footer
-                                content
+                                Wibu Shogun
                             </p>
                         </div>
                         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold">Products</h6>
-                            <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
-                            <p>
-                                <a href="#!" class="text-dark">MDBootstrap</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">MDWordPress</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">BrandFlow</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">Bootstrap Angular</a>
-                            </p>
+
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                            <!-- Links -->
-                            <h6 class="text-uppercase fw-bold">Useful links</h6>
-                            <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
-                            <p>
-                                <a href="#!" class="text-dark">Your Account</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">Become an Affiliate</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">Shipping Rates</a>
-                            </p>
-                            <p>
-                                <a href="#!" class="text-dark">Help</a>
-                            </p>
+
                         </div>
-                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 pb-5">
                             <h6 class="text-uppercase fw-bold">Contact</h6>
                             <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
-                            <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-                            <p><i class="fas fa-envelope mr-3"></i> info@example.com</p>
-                            <p><i class="fas fa-phone mr-3"></i></p>
-                            <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                            <p><i class="fas fa-envelope mr-3"></i> ledinhdangkhoa10a9@gmail.com</p>
+                            <p><i class="fas fa-phone mr-3"></i> 0706042250</p>
                         </div>
                     </div>
                 </div>

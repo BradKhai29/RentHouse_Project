@@ -28,6 +28,11 @@ public final class RentHouse {
     private String districtName;
     private User provider;
     private boolean haveNewComment = false;
+    /**
+     * This variable is mainly used for pagination feature
+     * @param itemNo 
+     */
+    private int itemNo;
 
     public RentHouse() {
     }
@@ -180,6 +185,14 @@ public final class RentHouse {
 
     public void setProvider(User provider) {
         this.provider = provider;
+    }
+
+    public void setItemNo(int itemNo) {
+        this.itemNo = itemNo;
+    }
+
+    public int getItemNo() {
+        return itemNo;
     }
     
     @Override

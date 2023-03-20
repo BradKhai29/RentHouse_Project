@@ -1,8 +1,10 @@
 package support_enum;
 
 public enum AttributeEnum {
+    action,
     root,
     checkpoint,
+    maxPage,
     currentPageNum,
     upperPageNum,
     lowerPageNum,
@@ -14,6 +16,8 @@ public enum AttributeEnum {
     COMMENT,
     houseID,
     rentHouse,
+    updateRentHouse,
+    createRentHouse,
     rentHouseProvider,
     NOT_FOUND,
     districtMap,
@@ -23,7 +27,8 @@ public enum AttributeEnum {
     rentHouseMap,
     selectedRentHouseList,
     UPDATE_PROFILE_CHECKPOINT,
-    UPDATE_PASSWORD_CHECKPOINT;
+    UPDATE_PASSWORD_CHECKPOINT,
+    UPDATE_RENTHOUSE_CHECKPOINT;
 
     @Override
     public String toString() {

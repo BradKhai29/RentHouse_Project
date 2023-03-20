@@ -1,14 +1,16 @@
-package entity.user;
+package entity.FactoryDAO;
 
 import java.sql.ResultSet;
 import java.util.Map;
 import java.util.Optional;
 
 import entity.DAO.BaseDAO;
+import entity.user.User;
 import java.util.HashMap;
 
 public class UserDAO extends BaseDAO<User> {    
     private static final String UserTable = "InAppUser";
+    private static final String FavorTable = "FavorRentHouse";
     private static final String REGISTER_NEW_USER = "INSERT INTO " + UserTable + " (username, password, fullname, phoneNumber, gender, userRole)"
             + "VALUES (?, ?, ?, ?, ?, ?);";
     private static final String SELECT_ALL = "SELECT * FROM " + UserTable;
@@ -17,6 +19,9 @@ public class UserDAO extends BaseDAO<User> {
     private static String UPDATE_INFO = "UPDATE " + UserTable + " \n"
             + "SET fullname = ?, phoneNumber = ?, gender = ?, password = ? \n"
             + "WHERE userID = ?;";
+    private static String GET_FAVOR_RENT_HOUSE_LIST = "SELECT houseID FROM " + FavorTable + " WHERE userID = ?";
+    private static String ADD_FAVOR_RENT_HOUSE = "INSERT INTO " + FavorTable + "(userID, houseID) VALUES (?, ?);";
+    private static String REMOVE_FAVOR_RENT_HOUSE = "DELETE FROM " + FavorTable + " WHERE (userID = ?) AND (houseID = ?);";
     
     //In app usage map
     private Map<Integer, User> userMap;
@@ -184,7 +189,55 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    public Map<Integer, User> getAll(int id) {
-        return new HashMap<>();
+    public Map<Integer, User> getAll(int userID) {
+        openQuery(GET_FAVOR_RENT_HOUSE_LIST);
+        Map<Integer, User> favorMap = new HashMap<>();
+        try {
+            query.setInt(1, userID);
+            ResultSet resultSet = query.executeQuery();
+            while(resultSet.next()) 
+            {
+                int houseID = resultSet.getInt("houseID");
+                favorMap.put(houseID, null);
+            }
+            System.out.println("load favor map success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        closeQuery();
+        return favorMap;
+    }
+    
+    public void AddFavorHouse(int userID, int houseID) {
+        openQuery(ADD_FAVOR_RENT_HOUSE);
+        
+        try {
+            query.setInt(1, userID);
+            query.setInt(2, houseID);
+            query.executeUpdate();
+            
+            System.out.println("Add favor success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        closeQuery();
+    }
+    
+    public void RemoveFavorHouse(int userID, int houseID) {
+        openQuery(REMOVE_FAVOR_RENT_HOUSE);
+        
+        try {
+            query.setInt(1, userID);
+            query.setInt(2, houseID);
+            query.executeUpdate();
+            
+            System.out.println("Remove favor success");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        closeQuery();
     }
 }

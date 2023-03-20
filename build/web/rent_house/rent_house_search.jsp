@@ -17,10 +17,9 @@
             <section class="blog-header py-3">
                 <div class="row flex-nowrap justify-content-between align-items-center">
                     <div class="col-4 pt-1">
-                        <a class="link-secondary" href="#">Subscribe</a>
                     </div>
                     <div class="col-4 text-center">
-                        <a class="blog-header-logo text-dark" href="${root}">
+                        <a class="blog-header-logo text-dark text-uppercase" href="#">
                             Renty
                         </a>
                     </div>
@@ -38,9 +37,7 @@
                                     <i class="fa-solid fa-circle-user icon"></i> ${USER.username}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Cài đặt tài khoản</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="">Đăng bài</a></li>
+                                    <li><a class="dropdown-item" href="${rent_house}">Đăng bài</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="${user}?action=logout">Đăng xuất</a></li>
                                 </ul>
@@ -57,7 +54,7 @@
                 </div>
             </section>
             <div class="row">
-                <h5 class="font-monospace">Tìm kiếm theo quận</h5>
+                <p class="fs-6 text-uppercase">Tìm kiếm theo quận</p>
             </div>
             <form class="row my-2" action="${rent_house_search}" method="post">
                 <div class="col d-flex justify-content-start pe-0">
@@ -91,9 +88,6 @@
                                     <div class="position-relative">
                                         <button type="submit" class="card-img-top border-0 p-0 m-0">
                                             <img width="100%" height="320" class="card-img-top" src="${root}/${rentHouse.imgURL}" alt="">
-                                        </button>
-                                        <button class="btn btn-danger position-absolute bottom-0 end-0">
-                                            <i class="fa-regular fa-heart"></i>
                                         </button>
                                     </div>
                                     <ul class="card-body m-0 py-0">
@@ -131,9 +125,20 @@
                                             <div class="card-title">
                                                 ${rentHouse.streetNumber} ${rentHouse.streetName}, ${rentHouse.districtName}
                                             </div>
-                                            <div class="card-title">
-                                                <i class="fa-solid fa-sliders"></i>
-                                            </div>
+                                            <section class="card-title">
+                                                <c:if test="${USER.userID == rentHouse.providerID}">
+                                                    <div class="btn-group dropup">
+                                                        <input type="number" name="houseID" value="${rentHouse.houseID}" hidden>
+                                                        <i class="fa-solid fa-sliders text-warning" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                                        <ul class="dropdown-menu">
+                                                            <li><button class="dropdown-item" formaction="${rent_house}" type="submit" name="action" value="get_update">Chỉnh sửa thông tin</button></li>
+                                                            <li><hr class="dropdown-divider"></li>
+                                                            <li><button class="dropdown-item" formaction="${rent_house}" type="submit" name="action" value="delete">Xóa bài đăng</button></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </c:if>
+                                            </section>
                                         </div>
                                     </div>
                                 </form>

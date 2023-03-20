@@ -1,6 +1,5 @@
 package filter;
 
-import entity.rent_house.RentHouse;
 import entity.user.User;
 import java.io.IOException;
 import javax.servlet.DispatcherType;

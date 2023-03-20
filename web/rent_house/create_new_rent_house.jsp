@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JSP Page</title>
+        <title>Create new Rent House Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
@@ -15,9 +15,9 @@
     </head>
     <body>
         <header class="navbar navbar-expand navbar-dark sticky-top bg-dark flex-md-nowrap p-0 mb-5 shadow">
-            <span class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
-                <i class="fa-solid fa-cubes"></i>Trang chủ
-            </span>
+            <a href="${root}" class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
+                <i class='fa-solid fa-house'></i>Trang chủ
+            </a>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,9 +28,9 @@
                         <i class="fas fa-user fa-fw"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Cài đặt tài khoản</a></li>
+                        <li><a class="dropdown-item" href="${user}?action=update">Cài đặt tài khoản</a></li>
                         <li><hr class="dropdown-divider"/></li>
-                        <li><button class="dropdown-item" type="submit" name="command" formaction="admin" value="LOGOUT">Đăng xuất</button></li>
+                        <li><a class="dropdown-item" href="${user}?action=logout">Đăng xuất</a></li>
                     </ul>
                 </form>
             </ul>
@@ -77,26 +77,26 @@
                                 </div>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Tên nhà trọ</span>
-                                    <input type="text" name="houseName" class="form-control fw-bold col-8" value="${rentHouse.houseName}" ${STEP2 == null ? 'required' : 'disabled'}>
+                                    <input type="text" name="houseName" class="form-control fw-bold col-8" value="${createRentHouse.houseName}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Mô tả nhà trọ</span>
-                                    <textarea name="details" class="form-control fw-bold col-8" ${STEP2 == null ? 'required' : 'disabled'}>${rentHouse.details}</textarea>
+                                    <textarea name="details" class="form-control fw-bold col-8" ${STEP2 == null ? 'required' : 'disabled'}>${createRentHouse.details}</textarea>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Diện tích</span>
-                                    <input type="number" name="area" class="form-control fw-bold col-8" value="${rentHouse.area}" ${STEP2 == null ? 'required' : 'disabled'}>
+                                    <input type="number" name="area" class="form-control fw-bold col-8" value="${createRentHouse.area}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <span class="input-group-text col-3" id="inputGroup-sizing-default">Giá cho thuê</span>
-                                    <input type="number" name="price" class="form-control fw-bold col-8" value="${rentHouse.price}" ${STEP2 == null ? 'required' : 'disabled'}>
+                                    <input type="number" name="price" class="form-control fw-bold col-8" value="${createRentHouse.price}" ${STEP2 == null ? 'required' : 'disabled'}>
                                 </h5>
                                 <h5 class="input-group mb-3">
                                     <label class="input-group-text col-3" for="typeName">Tên Quận</label>
                                     <select name="districtID" id="typeName" class="form-select fw-bold col-8" ${STEP2 == null ? 'required' : 'disabled'}>
                                         <c:forEach var="districtEntry" items="${applicationScope.districtMap}">
                                             <c:set var="district" value="${districtEntry.value}"></c:set>
-                                            <option value="${districtEntry.key}" ${rentHouse.districtID == districtEntry.key ? 'selected' : ''}>${district.districtName}</option>
+                                            <option value="${districtEntry.key}" ${createRentHouse.districtID == districtEntry.key ? 'selected' : ''}>${district.districtName}</option>
                                         </c:forEach>
                                     </select>
                                 </h5>
@@ -105,8 +105,8 @@
                                     <select name="streetID" id="typeName" class="form-select fw-bold col-8" ${STEP2 == null ? 'disabled' : 'required'}>
                                         <c:forEach var="streetEntry" items="${applicationScope.streetMap}">
                                             <c:set var="street" value="${streetEntry.value}"></c:set>
-                                            <c:if test="${street.districtID == rentHouse.districtID}">
-                                                <option value="${streetEntry.key}" ${rentHouse.streetID == streetEntry.key ? 'selected' : ''}>${street.streetName}</option>
+                                            <c:if test="${street.districtID == createRentHouse.districtID}">
+                                                <option value="${streetEntry.key}" ${createRentHouse.streetID == streetEntry.key ? 'selected' : ''}>${street.streetName}</option>
                                             </c:if>
                                         </c:forEach>
                                     </select>
@@ -146,7 +146,36 @@
                 </div>
             </div>
         </main>
-        <footer></footer>
+        <footer class="text-center text-lg-start text-light bg-dark">
+            <section class="">
+                <div class="container text-center text-md-start mt-5">
+                    <!-- Grid row -->
+                    <div class="row mt-3 pt-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <!-- Content -->
+                            <h6 class="text-uppercase fw-bold">Group name</h6>
+                            <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
+                            <p>
+                                Wibu Shogun
+                            </p>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                        </div>
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4 pb-5">
+                            <h6 class="text-uppercase fw-bold">Contact</h6>
+                            <hr class="mb-4 mt-0 d-inline-block mx-auto myslash"/>
+                            <p><i class="fas fa-envelope mr-3"></i> ledinhdangkhoa10a9@gmail.com</p>
+                            <p><i class="fas fa-phone mr-3"></i> 0706042250</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </footer>
         <script>
             var loadFile = function (event) {
                 var output = document.getElementById('output');

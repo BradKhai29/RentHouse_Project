@@ -1,11 +1,6 @@
 package entity.FactoryDAO;
 
 import entity.DAO.IDao;
-import entity.comment.CommentDAO;
-import entity.district.DistrictDAO;
-import entity.rent_house.RentHouseDAO;
-import entity.street.StreetDAO;
-import entity.user.UserDAO;
 
 public enum FactoryDAO {
     DISTRICT,
@@ -20,46 +15,29 @@ public enum FactoryDAO {
     private static UserDAO userDAO;
     private static CommentDAO commentDAO;
 
-    private static void loadDAO(FactoryDAO inputFactoryDAO) {
-        switch (inputFactoryDAO) 
-        {
-            case DISTRICT:
-                if(districtDAO == null) districtDAO = new DistrictDAO();
-                break;
-            case STREET:
-                if(streetDAO == null) streetDAO = new StreetDAO();
-                break;
-            case RENT_HOUSE:
-                if(rentHouseDAO == null) rentHouseDAO = new RentHouseDAO();
-                break;
-            case USER:
-                if(userDAO == null) userDAO = new UserDAO();
-                break;
-            case COMMENT:
-                if(commentDAO == null) commentDAO = new CommentDAO();
-                break;
-        }
-    }
     
-    public static IDao getDao(FactoryDAO inputFactoryDAO) {
-        loadDAO(inputFactoryDAO);
-        
+    public static IDao getDao(FactoryDAO inputFactoryDAO) {      
         IDao resultDAO = null;
         switch (inputFactoryDAO) 
         {
             case DISTRICT:
+                if(districtDAO == null) districtDAO = new DistrictDAO();
                 resultDAO = districtDAO;
                 break;
             case STREET:
+                if(streetDAO == null) streetDAO = new StreetDAO();
                 resultDAO = streetDAO;
                 break;
             case RENT_HOUSE:
+                if(rentHouseDAO == null) rentHouseDAO = new RentHouseDAO();
                 resultDAO = rentHouseDAO;
                 break;
             case USER:
+                if(userDAO == null) userDAO = new UserDAO();
                 resultDAO = userDAO;
                 break;
             case COMMENT:
+                if(commentDAO == null) commentDAO = new CommentDAO();
                 resultDAO = commentDAO;
                 break;
         } 

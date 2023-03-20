@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import support_enum.AttributeEnum;
 import support_enum.ServletEnum;
-import webpage_tools.URLBuilder;
 import webpage_tools.URLBuilderFactory;
 
 @WebServlet(name = "PaginationServlet", urlPatterns = {"/page"})
 public class PaginationServlet extends HttpServlet {
-
-    private static URLBuilder urlBuilder = URLBuilderFactory.get();
     private static final String HOMEPAGE = URLBuilderFactory.getURL(ServletEnum.HOME);
     private static final int offset = 9;
+    private static int maxPage;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        maxPage = (Integer)request.getServletContext().getAttribute(AttributeEnum.maxPage.name());
         
         int currentPageNum = InputValidation.getNumber(request.getParameter("page"));
+        if(currentPageNum == InputValidation.default_value.getValue()) {
+            currentPageNum = (Integer)session.getAttribute(AttributeEnum.currentPageNum.name());
+        }
         int upperPageNum = 1;
         int lowerPageNum = 1;
 
@@ -38,7 +40,7 @@ public class PaginationServlet extends HttpServlet {
 
         if (nextPage != null) {
             currentPageNum = (Integer) session.getAttribute(AttributeEnum.currentPageNum.name());
-            if (currentPageNum < 9) {
+            if (currentPageNum < maxPage) {
                 currentPageNum++;
             }
             setUpperAndLowPageNum(session, currentPageNum, upperPageNum, lowerPageNum);

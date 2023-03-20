@@ -1,7 +1,7 @@
 package controller.user;
 
 import entity.user.User;
-import entity.user.UserDAO;
+import entity.FactoryDAO.UserDAO;
 import controller.validation.InputValidation;
 
 import java.io.IOException;
@@ -138,12 +138,12 @@ public class RegisterServlet extends HttpServlet {
 
         if (testExistUsername) {
             message = ErrorEnum.EXIST_USERNAME;
-            session.setAttribute(message.name(), message.getMessage());
+            request.setAttribute(message.name(), message.getMessage());
         }
 
         if (testConfirmPassword == false) {
             message = ErrorEnum.CONFIRM_PASSWORD_NOT_MATCH;
-            session.setAttribute(message.name(), message.getMessage());
+            request.setAttribute(message.name(), message.getMessage());
         }
 
         if (allTest) {

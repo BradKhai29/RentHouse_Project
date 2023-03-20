@@ -22,6 +22,8 @@ import support_enum.AttributeEnum;
 import support_enum.ServletEnum;
 import support_enum.URLEnum;
 import webpage_tools.PrintTools;
+import webpage_tools.URLBuilder;
+import webpage_tools.URLBuilderFactory;
 
 @WebFilter(dispatcherTypes = {
     DispatcherType.REQUEST,
@@ -50,7 +52,7 @@ public final class RootFilter implements Filter {
         //if null, init new then add to application scope
         Map<Integer, District> districtMap = (Map)application.getAttribute(AttributeEnum.districtMap.name());
         Map<Integer, Street> streetMap = (Map)application.getAttribute(AttributeEnum.streetMap.name());
-        Map<Integer, RentHouse> rentHouseMap = (Map)application.getAttribute(AttributeEnum.streetMap.name());
+        Map<Integer, RentHouse> rentHouseMap = (Map)application.getAttribute(AttributeEnum.rentHouseMap.name());
         Object rootURL = application.getAttribute(AttributeEnum.root.name());
         
         if(districtMap == null) {
@@ -72,6 +74,10 @@ public final class RootFilter implements Filter {
         HttpSession session = ((HttpServletRequest)request).getSession();
         Object checkPoint = session.getAttribute(AttributeEnum.checkpoint.name());
         if(checkPoint == null) InitPagination((HttpServletRequest)request);
+        
+        //Set max page
+        double maxPage = Math.ceil(rentHouseMap.size() / 9.0);
+        application.setAttribute(AttributeEnum.maxPage.name(), Double.valueOf(maxPage).intValue());
       
         chain.doFilter(request, response);
     }
@@ -79,8 +85,11 @@ public final class RootFilter implements Filter {
     private void InitRootURLs(ServletContext application) {
         String rootURL = application.getContextPath();
         //Set some URLs
+        URLBuilder urlBuilder = URLBuilderFactory.get();
+        urlBuilder.setContextPath(rootURL);
         application.setAttribute(URLEnum.root.name(), rootURL);
         application.setAttribute(URLEnum.user.name(), rootURL.concat(ServletEnum.USER.getURL()));
+        application.setAttribute(URLEnum.user_favor.name(), rootURL.concat(ServletEnum.USER_FAVOR_RENTHOUSE_MAP.getURL()));
         application.setAttribute(URLEnum.user_update.name(), rootURL.concat(ServletEnum.USER_UPDATE.getURL()));
         application.setAttribute(URLEnum.user_comment.name(), rootURL.concat(ServletEnum.USER_COMMENT.getURL()));
         application.setAttribute(URLEnum.rent_house.name(), rootURL.concat(ServletEnum.RENT_HOUSE.getURL()));
@@ -91,6 +100,7 @@ public final class RootFilter implements Filter {
     private void InitPagination(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute(AttributeEnum.checkpoint.name(), "");
+        session.setAttribute(AttributeEnum.currentPageNum.name(), 1);
         session.setAttribute(AttributeEnum.lowerPageNum.name(), 1);
         session.setAttribute(AttributeEnum.upperPageNum.name(), 9);
     }

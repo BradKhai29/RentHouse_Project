@@ -1,7 +1,11 @@
 package entity.user;
 
-public final class User {
+import entity.FactoryDAO.FactoryDAO;
+import entity.FactoryDAO.UserDAO;
+import java.util.HashMap;
+import java.util.Map;
 
+public final class User {    
     private int userID;
     private String username;
     private String password;
@@ -10,6 +14,10 @@ public final class User {
     private String phoneNumber;
     //userRole = true : RentHouse provider
     private boolean userRole;
+    private Map<Integer, User> favorRentHouseMap;
+    
+    
+    private static UserDAO userDAO;
 
     public User() {
     }
@@ -83,6 +91,29 @@ public final class User {
 
     public void setUserRole(boolean userRole) {
         this.userRole = userRole;
+    }
+
+    public Map<Integer, User> getFavorRentHouseMap() {
+        if(favorRentHouseMap == null) 
+        {
+            favorRentHouseMap = new HashMap<>();
+            if(userDAO == null) userDAO = (UserDAO)FactoryDAO.getDao(FactoryDAO.USER);
+            Map<Integer, User> resultMap = userDAO.getAll(userID);
+            favorRentHouseMap.putAll(resultMap);
+        }
+        return favorRentHouseMap;
+    }
+    
+    public void addFavorHouse(int houseID) {
+        getFavorRentHouseMap();
+        userDAO.AddFavorHouse(userID, houseID);
+        favorRentHouseMap.put(houseID, null);
+    }
+    
+    public void removeFavorHouse(int houseID) {
+        getFavorRentHouseMap();
+        userDAO.RemoveFavorHouse(userID, houseID);
+        if(favorRentHouseMap.containsKey(houseID))favorRentHouseMap.remove(houseID);
     }
 
     @Override

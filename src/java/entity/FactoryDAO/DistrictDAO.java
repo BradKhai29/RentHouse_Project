@@ -1,6 +1,7 @@
-package entity.district;
+package entity.FactoryDAO;
 
 import entity.DAO.BaseDAO;
+import entity.district.District;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;

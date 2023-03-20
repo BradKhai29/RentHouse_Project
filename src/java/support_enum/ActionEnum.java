@@ -1,6 +1,8 @@
 package support_enum;
 
 public enum ActionEnum {
+    FAVOR,
+    REMOVE_FAVOR,
     LOAD_DATA,
     LOGOUT,
     LOGIN,
@@ -9,6 +11,7 @@ public enum ActionEnum {
     CREATE,
     COMMENT,
     CONFIRM_CREATE,
+    GET_UPDATE,
     UPDATE,
     UPDATE_PASSWORD,
     EDIT,

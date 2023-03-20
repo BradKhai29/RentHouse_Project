@@ -20,7 +20,6 @@ public enum InputValidation {
             return false;
         }
         boolean isValid = true;
-
         boolean isZeroFirst = Character.toString(phoneNumber.charAt(0)).equals("0");
 
         //Check if the First Character is zero or not

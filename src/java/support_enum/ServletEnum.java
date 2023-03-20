@@ -7,7 +7,8 @@ public enum ServletEnum {
     RENT_HOUSE_SEARCH("rent_house/search"),
     USER("user"),
     USER_UPDATE("user/update"),
-    USER_COMMENT("user/comment");
+    USER_COMMENT("user/comment"),
+    USER_FAVOR_RENTHOUSE_MAP("user/favor");
 
     private String URL;
     private static final String URLSeperator = "/";
